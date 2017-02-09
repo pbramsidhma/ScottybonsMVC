@@ -1,0 +1,99 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using System.Web.Mvc.Html
+@using ScottybonsMVC.Controllers
+@{
+    Layout = "ScottyBonsMaster.cshtml";
+}
+@section BodyContent{
+    <section id="top-menu">
+        <div id="register-top_no_menu">
+        </div>
+    </section>
+    <div>
+        @Html.Action("ManageSubscription", "Promotions")
+    </div>
+
+}
+@section scripts {
+    <script type="text/javascript">
+        $(":input").not("[id=enableEditSubscription-top],[id=enableEditSubscription-btm]").prop("disabled", true);
+
+        $(':input:disabled').prop('title', '@Resources.Scottybons.ScottybonsDataStrings.Click_Edit_Subscription');
+        
+        $("#saveSubscription-top,#saveSubscription-btm").hide();
+        //$("#saveSubscription").hide();
+        //$('fieldset#mysubscriptions :input:not("button")').prop('disabled', true);
+
+        $("#enableEditSubscription-top,#enableEditSubscription-btm").click(function () {
+            //$(this).slideUp(600);
+            $("input:button[id=enableEditSubscription-top]").slideUp(600);
+            $("input:button[id=enableEditSubscription-btm]").slideUp(600);
+           // $('#enableEditSubscription').slideUp(600);
+            $(":input").not("[id=enableEditSubscription-top],[id=enableEditSubscription-btm]").prop("disabled", false);
+            //$("#saveSubscription").slideDown(800);
+            $("#saveSubscription-top,#saveSubscription-btm").slideDown(1000);
+        });
+
+        $('#sendMeScottybox').change(function () {
+            if ($(this).is(":checked")) {
+                $("input:radio[name=SelectedPeriod]:first").prop('checked', true);
+            } else {
+                $("input:radio[name=SelectedPeriod]").prop('checked', false);
+            }
+        });
+        $(".drp-occasions").change(function () {
+            if ($('.drp-occasions option:selected').index() > 0) {
+                $("#occasion-err").slideUp(800);
+                return true;
+            } else {
+                $("#occasion-err").slideDown(800);
+            }
+        });
+        $('.drp-phone').blur(function () {
+            if ($(this).val() == null || $(this).val() == '') {
+                $('#dAddressPhone-err').slideDown(600);
+            } else {
+                $('#dAddressPhone-err').slideUp(600);
+                return true;
+            }
+        });
+        $('.drp-street').blur(function () {
+            if ($(this).val() == null || $(this).val() == '') {
+                $('#dAddressStreet-err').slideDown(600);
+            } else {
+                $('#dAddressStreet-err').slideUp(600);
+                return true;
+            }
+        });
+        $('.drp-hno').blur(function () {
+            if ($(this).val() == null || $(this).val() == '') {
+                $('#dAddressHno-err').slideDown(600);
+            } else {
+                $('#dAddressHno-err').slideUp(600);
+                return true;
+            }
+        });
+        $('.drp-zip').blur(function () {
+            if ($(this).val() == null || $(this).val() == '') {
+                $('#dAddressZip-err').slideDown(600);
+            } else {
+                $('#dAddressZip-err').slideUp(600);
+                return true;
+            }
+        });
+        $('.drp-town').blur(function () {
+            if ($(this).val() == null || $(this).val() == '') {
+                $('#dAddressTown-err').slideDown(600);
+            } else {
+                $('#dAddressTown-err').slideUp(600);
+                return true;
+            }
+        });
+        $("#saveSubscription-top,#saveSubscription-btm").click(function () {
+            if (!confirm("@Resources.Scottybons.ScottybonsDataStrings.Subscription_confirm_save")) {
+                return false;
+            }
+        });
+    </script>
+}
+
